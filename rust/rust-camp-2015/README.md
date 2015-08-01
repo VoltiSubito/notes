@@ -72,7 +72,3 @@
   + Rust is stack allocated by default
   + Ruby and Python are heap allocated by default
   + Rust does not have garbage collection
-  
-  
-
-  
