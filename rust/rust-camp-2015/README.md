@@ -32,7 +32,7 @@
     + Read-only access
     + Can have many readers at once
   + IterMut 
-    + Locans the data in the collection
+    + Loans the data in the collection
     + Read-Write access
     + Only one loan at once
   + Drain (I drink your milkshake)
@@ -159,4 +159,101 @@
   + Old GitHub wiki is now `rust-lang/rust-wiki-backup`
   + What happens when GitHub goes away?
   + Lost IRC logs because irclog.gr went away
+
   
+## Writing High Performance Async IO Apps
+
+  + Binding complex C libs can be painful
+  
+### IO Model
+  + Readiness Model
+    + Kernel watches sockets of interest and notifies you
+  + Completion Model
+    + Read socket first and are notified when it has completed
+  + Operating systems use different models. A lib that works on multi OSs needs to understand both.
+  + Picked readiness because of Linux.
+  
+### Using MIO
+  + Wait for socket readiness
+  + Do something
+  + Repeat
+  
+  + Edge Triggered Notifications (recommended)
+    + Events are only delivered once to the handler
+  + Level Triggered Notifications
+    + Notifies handler every loop iteration
+  + Tokens
+    + Identify which socket triggered a notification
+  + Why not callbacks?
+    + Not zero cost
+
+### Tips for using MIO
+  + Use Slab util
+  + Minimize work on event loop thread
+  + Components should encapsulate MIO
+
+### [MIO GitHub](https://github.com/carllerche/mio)
+
+## Using Rust from C... or Any Language
+
+  + Start-ups have problems competeing in areas dominated by C++
+    + Rust lets people do work that they couldn't have done before
+  + "I'm not confident I could edit any of this [C++ code] without introducing segfaults"
+  + If you want to integrate Ruby with Rust, you have to go through C
+    + Ruby is safe, Rust is safe, C is not safe.
+  + Rust helps us communicate fundamental constraints
+  + C example:
+    + `char* trace_name(Trace* trace){ ... }`
+  + Rust code:
+    + `fn trace_name(trace: &Trace) -> String { ... }`
+  + Extern Rust Functions
+    + `#[no_mangle] extern "C" fn trace_name(trace: &Trace) -> String { ... }`
+  + "Rust is a DSL for describing ownership concepts that you have to think about when writing C or C++"
+  + The Concepts of ownership are fundamental to systems programming
+
+### Calling Rust from C
+  + Identify and implement the shared type definitions in Rust and C
+  + Use Rust types to flesh out the ownership and mutability rules
+  + Decide how to express and "enforce" the requirements from C
+  + Treat anything that isn't a number as an opaque structure
+  
+  
+## Making Tools for Rust
+
+  + rustfmt
+    + Code formatter
+  + Clippy
+    + An additional lint
+  + DXR
+    + A tool for navigating / searching your code
+    + Find implementations
+    + Show type & Jump to definition
+
+### Introduction to the compiler
+  + Analysis
+    + Parsing and expansion
+    + Name resolution
+    + Type checking
+    + Trait resolution
+    + Borrow checking
+  + Code generation
+    + Mostly handled by LLVM
+
+### Productivity Tools
+  + Debugger
+  + Lints
+  + Tools for Understanding
+    + Visulaization
+    + DXR
+  + Automation
+    + rustfmt
+    + Refactoring tools
+  + Tools that extend the compiler
+  + Tools that can stand alone
+    + Ex: Counting lines of code
+
+### Demonstration of 'callgraph'
+  + Compiler lets us run it as a service through "the driver"
+    + `rustc_driver::run_compiler(&args)
+    + Implement CompilerCalls
+      + Can tell the compiler to stop after the analysis phase
