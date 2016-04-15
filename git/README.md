@@ -15,4 +15,5 @@
 ### Getting updates from submodules
   + `git submodule update --init --recursive`
 
-### `git fetch --prune` --Just reminding myself to add --prune... I tend to forget this.
+## Reminders
+  + `git fetch --prune`
