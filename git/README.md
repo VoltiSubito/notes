@@ -15,5 +15,9 @@
 ### Getting updates from submodules
   + `git submodule update --init --recursive`
 
-## Reminders
-  + `git fetch --prune`
+## Other
+  + Pruning branches no longer on origin 
+    + `git fetch --prune`
+  + Changing user information for a single repo
+    + CD into specific repo
+    + `git config --local user.email "an@email.address"
