@@ -3,6 +3,7 @@
   + List running containers `docker ps`
   + List all containers `docker ps -a`
   + List all images `docker images`
+  + Prune `docker system prune`
   + Remove a container `docker rm <CONTAINER_ID>`
   + Remove an image `docker rmi <IMAGE_ID>`
   + Forcibly remove an image `docker rmi -f <IMAGE_ID>`
