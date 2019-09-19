@@ -3,6 +3,7 @@
   + List running containers `docker ps`
   + List all containers `docker ps -a`
   + List all images `docker images`
+  + Log into an image `docker run -it <IMAGE_ID> /bin/bash`
   + Prune `docker system prune`
   + Prune Volumes `docker volume prune`
   + Remove a container `docker rm <CONTAINER_ID>`
