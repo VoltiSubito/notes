@@ -1,0 +1,14 @@
+= Micronaut Notes
+
+Docs: https://docs.micronaut.io/latest/guide/index.html
+
+== Generating a new REST API Project
+
+. Update SDKMAN
+** `sdk update`
+. Install latest Micronaut
+** `sdk install micronaut`
+** `mn --version`
+. Create application
+** `mn create-app APP_NAME`
+** With Maven: `mn create-app APP_NAME --build maven`
